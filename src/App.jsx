@@ -35,23 +35,23 @@ function App() {
     }
   };
 
-  const handleChange = (event) => {
-    const letter = event.target.value.toLowerCase();
+  const handleContainerClick = () => {
+    const letter = inputLetter.toLowerCase();
     if (playable && /^[a-z]$/.test(letter)) {
-      processLetter(letter);
-      setInputLetter('');  
-    }
-  };
-
-  const handleKeydown = event => {
-    const { key, keyCode } = event;
-    if (playable && keyCode >= 65 && keyCode <= 90) {
-      const letter = key.toLowerCase();
       processLetter(letter);
     }
   };
 
   useEffect(() => {
+    const handleKeydown = event => {
+      const { key } = event;
+      const letter = key.toLowerCase();
+      if (playable && /^[a-z]$/.test(letter)) {
+        setInputLetter(letter);
+        processLetter(letter);
+      }
+    };
+
     document.addEventListener('keydown', handleKeydown);
 
     return () => {
@@ -68,13 +68,17 @@ function App() {
     selectedWordPair = words[random];
   }
 
+  const handleChange = (e) => {
+    setInputLetter(e.target.value);
+  };
+
   return (
     <>
       <Header />
       <div className="word-to-guess">
         <h2>Gissa det spanska ordet för:<br/><span>{selectedWordPair.swedish.toUpperCase()}</span></h2>
       </div>
-      <div className="game-container">
+      <div className="game-container" onClick={handleContainerClick}>
         <Figure wrongLetters={wrongLetters} />
         <WrongLetters wrongLetters={wrongLetters} />
         <WordHandler selectedWord={selectedWordPair.spanish} correctLetters={correctLetters} />
