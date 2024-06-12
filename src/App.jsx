@@ -35,34 +35,29 @@ function App() {
     }
   };
 
+  const handleChange = (event) => {
+    const letter = event.target.value.toLowerCase();
+    if (playable && /^[a-z]$/.test(letter)) {
+      processLetter(letter);
+      setInputLetter('');  
+    }
+  };
+
+  const handleKeydown = event => {
+    const { key, keyCode } = event;
+    if (playable && keyCode >= 65 && keyCode <= 90) {
+      const letter = key.toLowerCase();
+      processLetter(letter);
+    }
+  };
+
   useEffect(() => {
-    const handleInput = (input) => {
-      const letter = input.toLowerCase();
-      if (playable && /^[a-z]$/.test(letter)) {
-        processLetter(letter);
-      }
-    };
-
-    const handleKeydown = event => {
-      const { key, keyCode } = event;
-      if (playable && keyCode >= 65 && keyCode <= 90) {
-        const letter = key.toLowerCase();
-        processLetter(letter);
-      }
-    };
-
-    document.addEventListener('input', handleInput);
     document.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.removeEventListener('input', handleInput);
       document.removeEventListener('keydown', handleKeydown);
     };
   }, [correctLetters, wrongLetters, playable]);
-
-  const handleChange = (e) => {
-    setInputLetter(e.target.value);
-  };
 
   function playAgain() {
     setPlayable(true);
