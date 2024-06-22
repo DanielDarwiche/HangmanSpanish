@@ -9,3 +9,4 @@ In this project i made two different versions:
 - a phone version which has a different deployment and a virtual keyboard: https://spanskamobilen.netlify.app/
 - a computer version which simply reads the pressed keys hangmanspanish.netlify.app/
 
+Observe, the different versions are styled only for their own screen sizes.
